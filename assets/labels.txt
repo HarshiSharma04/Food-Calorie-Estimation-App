@@ -1,0 +1,37 @@
+0 aloo gobi
+1 adhirasam
+2 aloo tikki
+3 biryani
+4 butter chicken
+5 bhindi masala
+6 bhatura
+7 basundi
+8 chana masala
+9 chapati
+10 chicken tikka
+11 cham cham
+12 daal makhni
+13 gajar ka halwa
+14 ghevar
+15 gulab jamun
+16 jalebi
+17 kachori
+18 kadhai paneer
+19 kadhi pakoda
+20 kuzi paniyaram
+21 lassi
+22 litti choka
+23 missi roti
+24 malpua
+25 kalakand
+26 naan
+27 palak paneer
+28 poha
+29 paneer butter masala
+30 rabri
+31 ras malai
+32 rasgulla
+33 sandesh
+34 unni apam
+35 sheer korma
+36 soan papdi

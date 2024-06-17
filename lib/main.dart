@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'homepage.dart';
 
 void main() {
@@ -10,7 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Your App Name',
+      title: 'Food Calorie Recognition App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
