@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'track_progress_page.dart';
 import 'food_scan_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -81,8 +82,6 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-
-
       body: Container(
         color: Color(0xFFEDE7DB),
         child: Column(
@@ -123,10 +122,20 @@ class HomePage extends StatelessWidget {
                 mainAxisSpacing: 20.0,
                 shrinkWrap: true,
                 children: [
-                  OptionTile(title: 'Track Progress', textSize: 20, aspectRatio: 2),
-                  OptionTile(title: 'Nutritional Dashboard', textSize: 20, aspectRatio: 2),
-                  OptionTile(title: 'Recipes', textSize: 20, aspectRatio: 2),
-                  OptionTile(title: 'Personalized Food Choices', textSize: 20, aspectRatio: 2),
+                  OptionTile(
+                    title: 'Track Progress',
+                    textSize: 20,
+                    aspectRatio: 2,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => TrackProgressPage()),
+                      );
+                    },
+                  ),
+                  OptionTile(title: 'Nutritional Dashboard', textSize: 20, aspectRatio: 2, onTap: () {}),
+                  OptionTile(title: 'Recipes', textSize: 20, aspectRatio: 2, onTap: () {}),
+                  OptionTile(title: 'Personalized Food Choices', textSize: 20, aspectRatio: 2, onTap: () {}),
                 ],
               ),
             ),
@@ -141,34 +150,44 @@ class OptionTile extends StatelessWidget {
   final String title;
   final double textSize;
   final double aspectRatio;
+  final Function onTap;
 
-  const OptionTile({Key? key, required this.title, this.textSize = 18, this.aspectRatio = 3/1}) : super(key: key);
+  const OptionTile({
+    Key? key,
+    required this.title,
+    this.textSize = 18,
+    this.aspectRatio = 3/1,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: aspectRatio,
-      child: Container(
-        margin: EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.3),
-              spreadRadius: 2,
-              blurRadius: 5,
-              offset: Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              title,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: textSize, fontWeight: FontWeight.bold, color: Color(0xFF404040)),
+      child: GestureDetector(
+        onTap: () => onTap(),
+        child: Container(
+          margin: EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                title,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: textSize, fontWeight: FontWeight.bold, color: Color(0xFF404040)),
+              ),
             ),
           ),
         ),
