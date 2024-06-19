@@ -7,7 +7,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF755A5F),
+        backgroundColor: Color(0xFFF35E64),
         leading: Builder(
           builder: (context) => IconButton(
             icon: Icon(Icons.menu, color: Colors.white),
@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: <Widget>[
             Container(
-              color: Color(0xFF755A5F), // Background color for the header
+              color: Color(0xFFF35E64), // Background color for the header
               child: DrawerHeader(
                 child: Text(
                   'Menu',
@@ -83,63 +83,153 @@ class HomePage extends StatelessWidget {
         ),
       ),
       body: Container(
-        color: Color(0xFFEDE7DB),
-        child: Column(
-          children: [
-            Image.network(
-              'https://media.istockphoto.com/id/1459322601/vector/mindful-eating-and-daily-diet-with-harmony-and-balance-complete-full-menu-with-healthy.jpg?s=612x612&w=0&k=20&c=fbK3xSHrXRmRwybXeRBapZH0CyT09443jdZ4hEJjOik=',
-              width: double.infinity,
-              height: 300,
-              fit: BoxFit.cover,
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ScanFoodPage()),
-                );
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Text('Estimate Calorie', style: TextStyle(fontSize: 24, color: Colors.white)),
+        color: Colors.white,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 200, // Adjusted height for the image
+                child: Image.network(
+                  'https://media.istockphoto.com/id/1459322601/vector/mindful-eating-and-daily-diet-with-harmony-and-balance-complete-full-menu-with-healthy.jpg?s=612x612&w=0&k=20&c=fbK3xSHrXRmRwybXeRBapZH0CyT09443jdZ4hEJjOik=',
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
               ),
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Color(0xFFB3AC78),
-                backgroundColor: Color(0xFF82ACBA),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(38)),
-                shadowColor: Color(0xFFB3AC78),
-                elevation: 5,
-                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 8),
-                textStyle: TextStyle(fontSize: 24),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  'Welcome to Calorie Estimator!',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF404040)),
+                ),
               ),
-            ),
-            SizedBox(height: 20),
-            Expanded(
-              child: GridView.count(
-                crossAxisCount: 2,
-                crossAxisSpacing: 20.0,
-                mainAxisSpacing: 20.0,
-                shrinkWrap: true,
-                children: [
-                  OptionTile(
-                    title: 'Track Progress',
-                    textSize: 20,
-                    aspectRatio: 2,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => TrackProgressPage()),
-                      );
-                    },
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Text(
+                  'Your personalized tool for tracking calorie intake and making informed food choices.',
+                  style: TextStyle(fontSize: 16, color: Color(0xFF404040)),
+                ),
+              ),
+              SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Home()),
+                    );
+                  },
+                  icon: Icon(Icons.camera_alt, color: Colors.white),
+                  label: Text('Estimate Calorie', style: TextStyle(fontSize: 20, color: Colors.white)),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF82ACBA),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(38)),
+                    shadowColor: Color(0xFFB3AC78),
+                    elevation: 5,
+                    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 12),
+                    textStyle: TextStyle(fontSize: 20),
                   ),
-                  OptionTile(title: 'Nutritional Dashboard', textSize: 20, aspectRatio: 2, onTap: () {}),
-                  OptionTile(title: 'Recipes', textSize: 20, aspectRatio: 2, onTap: () {}),
-                  OptionTile(title: 'Personalized Food Choices', textSize: 20, aspectRatio: 2, onTap: () {}),
-                ],
+                ),
               ),
-            ),
-          ],
+              SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  children: [
+                    OptionTile(
+                      title: 'Track Progress',
+                      icon: Icons.track_changes,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => TrackProgressPage()),
+                        );
+                      },
+                    ),
+                    Divider(),
+                    OptionTile(title: 'Nutritional Dashboard', icon: Icons.dashboard, onTap: () {}),
+                    Divider(),
+                    OptionTile(title: 'Recipes', icon: Icons.restaurant_menu, onTap: () {}),
+                    Divider(),
+                    OptionTile(title: 'Personalized Food Choices', icon: Icons.food_bank, onTap: () {}),
+                  ],
+                ),
+              ),
+              SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'User Statistics',
+                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFF404040)),
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        StatCard(
+                          icon: Icons.fastfood,
+                          label: 'Calories Tracked',
+                          value: '2,500',
+                          color: Color(0xFF82ACBA),
+                        ),
+                        StatCard(
+                          icon: Icons.check_circle,
+                          label: 'Goals Achieved',
+                          value: '5',
+                          color: Color(0xFF82ACBA),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'User Feedback',
+                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFF404040)),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      '"This app has really helped me keep track of my diet and stay healthy!" - User A',
+                      style: TextStyle(fontSize: 16, color: Color(0xFF404040)),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      '"I love the personalized food choices feature!" - User B',
+                      style: TextStyle(fontSize: 16, color: Color(0xFF404040)),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 20),
+              Container(
+                color: Color(0xFFF3F3F3),
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    Text(
+                      'Footer',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF404040)),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      'Privacy Policy | Terms of Service',
+                      style: TextStyle(fontSize: 14, color: Color(0xFF404040)),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -148,50 +238,58 @@ class HomePage extends StatelessWidget {
 
 class OptionTile extends StatelessWidget {
   final String title;
-  final double textSize;
-  final double aspectRatio;
+  final IconData icon;
   final Function onTap;
 
   const OptionTile({
     Key? key,
     required this.title,
-    this.textSize = 18,
-    this.aspectRatio = 3/1,
+    required this.icon,
     required this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: aspectRatio,
-      child: GestureDetector(
-        onTap: () => onTap(),
-        child: Container(
-          margin: EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.3),
-                spreadRadius: 2,
-                blurRadius: 5,
-                offset: Offset(0, 3),
-              ),
-            ],
-          ),
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                title,
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: textSize, fontWeight: FontWeight.bold, color: Color(0xFF404040)),
-              ),
-            ),
-          ),
-        ),
+    return ListTile(
+      leading: Icon(icon, color: Color(0xFF755A5F)),
+      title: Text(
+        title,
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Color(0xFF404040)), // Semi-bold (w600)
       ),
+      onTap: () => onTap(),
+    );
+  }
+}
+
+class StatCard extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String value;
+  final Color color;
+
+  const StatCard({
+    Key? key,
+    required this.icon,
+    required this.label,
+    required this.value,
+    required this.color,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Icon(icon, size: 50, color: color),
+        SizedBox(height: 10),
+        Text(
+          label,
+          style: TextStyle(fontSize: 16, color: Color(0xFF404040)),
+        ),
+        Text(
+          value,
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF404040)),
+        ),
+      ],
     );
   }
 }

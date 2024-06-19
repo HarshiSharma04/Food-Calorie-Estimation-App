@@ -7,17 +7,23 @@ class TrackProgressPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Track Progress'),
-        backgroundColor: Color(0xFF755A5F),
+        backgroundColor: Color(0xFFEDE7DB),
+        iconTheme: IconThemeData(color: Color(0xFF755A5F)), // Ensuring the icons are visible
+        titleTextStyle: TextStyle(color: Color(0xFF755A5F), fontSize: 20, fontWeight: FontWeight.bold),
       ),
       body: Container(
-        color: Color(0xFFEDE7DB),
+        color: Colors.white,
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
               'Your Progress',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF404040)),
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF404040),
+              ),
             ),
             SizedBox(height: 20),
             Expanded(
@@ -30,7 +36,11 @@ class TrackProgressPage extends StatelessWidget {
                     children: [
                       Text(
                         'Calorie Intake Over Time',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF755A5F),
+                        ),
                       ),
                       SizedBox(height: 10),
                       Expanded(
@@ -41,10 +51,18 @@ class TrackProgressPage extends StatelessWidget {
                               gridData: FlGridData(show: true),
                               titlesData: FlTitlesData(
                                 bottomTitles: AxisTitles(
-                                  sideTitles: SideTitles(showTitles: true, reservedSize: 22, getTitlesWidget: bottomTitleWidgets),
+                                  sideTitles: SideTitles(
+                                    showTitles: true,
+                                    reservedSize: 22,
+                                    getTitlesWidget: bottomTitleWidgets,
+                                  ),
                                 ),
                                 leftTitles: AxisTitles(
-                                  sideTitles: SideTitles(showTitles: true, reservedSize: 28, getTitlesWidget: leftTitleWidgets),
+                                  sideTitles: SideTitles(
+                                    showTitles: true,
+                                    reservedSize: 28,
+                                    getTitlesWidget: leftTitleWidgets,
+                                  ),
                                 ),
                               ),
                               borderData: FlBorderData(show: true),
@@ -63,8 +81,11 @@ class TrackProgressPage extends StatelessWidget {
                                   ],
                                   isCurved: true,
                                   barWidth: 5,
-                                  color: Colors.blue,
-                                  belowBarData: BarAreaData(show: true, color: Colors.blue.withOpacity(0.3)),
+                                  color: Color(0xFF82ACBA),
+                                  belowBarData: BarAreaData(
+                                    show: true,
+                                    color: Color(0xFF82ACBA).withOpacity(0.3),
+                                  ),
                                 ),
                               ],
                             ),
@@ -84,16 +105,27 @@ class TrackProgressPage extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Text(
                         'Daily Intake Summary',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF755A5F),
+                        ),
                       ),
                       SizedBox(height: 10),
-                      _buildSummaryRow('Calories', '2000 kcal'),
-                      _buildSummaryRow('Protein', '75 g'),
-                      _buildSummaryRow('Carbs', '250 g'),
-                      _buildSummaryRow('Fats', '80 g'),
+                      Table(
+                        border: TableBorder.all(color: Colors.grey),
+                        children: [
+                          _buildTableRow('Nutrient', 'Amount', isHeader: true),
+                          _buildTableRow('Calories', '2000 kcal'),
+                          _buildTableRow('Protein', '75 g'),
+                          _buildTableRow('Carbs', '250 g'),
+                          _buildTableRow('Fats', '80 g'),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -105,22 +137,32 @@ class TrackProgressPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSummaryRow(String nutrient, String amount) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
+  TableRow _buildTableRow(String nutrient, String amount, {bool isHeader = false}) {
+    return TableRow(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
             nutrient,
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: isHeader ? FontWeight.bold : FontWeight.normal,
+              color: isHeader ? Color(0xFF755A5F) : Colors.black,
+            ),
           ),
-          Text(
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
             amount,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: isHeader ? FontWeight.bold : FontWeight.normal,
+              color: isHeader ? Color(0xFF755A5F) : Colors.black,
+            ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -128,6 +170,7 @@ class TrackProgressPage extends StatelessWidget {
     const style = TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 14,
+      color: Color(0xFF755A5F),
     );
     Widget text;
     switch (value.toInt()) {
@@ -157,6 +200,7 @@ class TrackProgressPage extends StatelessWidget {
     const style = TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 14,
+      color: Color(0xFF755A5F),
     );
     Widget text;
     switch (value.toInt()) {
