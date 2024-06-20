@@ -6,13 +6,19 @@ class TrackProgressPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Track Progress'),
-        backgroundColor: Color(0xFFEDE7DB),
+        title: Text('Track Progress', style: TextStyle(color: Colors.black),),
+        backgroundColor: Color(0xFFF35E64),
         iconTheme: IconThemeData(color: Color(0xFF755A5F)), // Ensuring the icons are visible
         titleTextStyle: TextStyle(color: Color(0xFF755A5F), fontSize: 20, fontWeight: FontWeight.bold),
       ),
       body: Container(
-        color: Colors.white,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFFF3E9F8), Color(0xFFEDE7DB)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -81,10 +87,14 @@ class TrackProgressPage extends StatelessWidget {
                                   ],
                                   isCurved: true,
                                   barWidth: 5,
-                                  color: Color(0xFF82ACBA),
+                                  color: Color(0xFF9D75DD),
                                   belowBarData: BarAreaData(
                                     show: true,
-                                    color: Color(0xFF82ACBA).withOpacity(0.3),
+                                    gradient: LinearGradient(
+                                      colors: [Color(0xFF9D75DD).withOpacity(0.3), Color(0xFF82ACBA).withOpacity(0.3)],
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                    ),
                                   ),
                                 ),
                               ],

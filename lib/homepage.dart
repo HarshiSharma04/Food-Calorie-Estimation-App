@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'track_progress_page.dart';
 import 'food_scan_page.dart';
+import 'nutritional_dashboard_page.dart';
+import 'recipes_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -148,11 +150,35 @@ class HomePage extends StatelessWidget {
                       },
                     ),
                     Divider(),
-                    OptionTile(title: 'Nutritional Dashboard', icon: Icons.dashboard, onTap: () {}),
+                    OptionTile(
+                      title: 'Nutritional Dashboard',
+                      icon: Icons.dashboard,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => NutritionalDashboardPage()),
+                        );
+                      },
+                    ),
                     Divider(),
-                    OptionTile(title: 'Recipes', icon: Icons.restaurant_menu, onTap: () {}),
+                    OptionTile(
+                      title: 'Recipes',
+                      icon: Icons.restaurant_menu,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => RecipePage()),
+                        );
+                      },
+                    ),
                     Divider(),
-                    OptionTile(title: 'Personalized Food Choices', icon: Icons.food_bank, onTap: () {}),
+                    OptionTile(
+                      title: 'Personalized Food Choices',
+                      icon: Icons.food_bank,
+                      onTap: () {
+                        // Navigate to personalized food choices page
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -254,7 +280,7 @@ class OptionTile extends StatelessWidget {
       leading: Icon(icon, color: Color(0xFF755A5F)),
       title: Text(
         title,
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Color(0xFF404040)), // Semi-bold (w600)
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Color(0xFF404040)), // Text color for the items
       ),
       onTap: () => onTap(),
     );
@@ -277,19 +303,26 @@ class StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Icon(icon, size: 50, color: color),
-        SizedBox(height: 10),
-        Text(
-          label,
-          style: TextStyle(fontSize: 16, color: Color(0xFF404040)),
-        ),
-        Text(
-          value,
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF404040)),
-        ),
-      ],
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        children: [
+          Icon(icon, size: 40, color: color),
+          SizedBox(height: 10),
+          Text(
+            label,
+            style: TextStyle(fontSize: 16, color: color),
+          ),
+          Text(
+            value,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: color),
+          ),
+        ],
+      ),
     );
   }
 }
