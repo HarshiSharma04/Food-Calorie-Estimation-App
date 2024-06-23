@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:tflite_flutter/tflite_flutter.dart';
+import 'package:food_calorie_recognition_app/main.dart';
+import 'package:tflite_v2/tflite_v2.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -18,53 +19,56 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     loadCamera();
-    loadModel();
+    loadmodel();
   }
 
-  loadCamera() async {
-    final cameras = await availableCameras();
-    if (cameras.isNotEmpty) {
-      cameraController = CameraController(cameras[0], ResolutionPreset.high);
-      cameraController!.initialize().then((value) {
-        if (!mounted) {
-          return;
-        } else {
-          setState(() {
-            cameraController!.startImageStream((imageStream) {
-              cameraImage = imageStream;
-              runModel();
-            });
+  loadCamera() {
+    cameraController = CameraController(cameras![0], ResolutionPreset.high);
+    cameraController!.initialize().then((value) {
+      if (!mounted) {
+        return;
+      } else {
+        setState(() {
+          cameraController!.startImageStream((imageStream) {
+            cameraImage = imageStream;
+            runModel();
           });
-        }
-      });
-    }
+        });
+      }
+    });
   }
-
 
   runModel() async {
     if (cameraImage != null) {
-      var interpreter = await Interpreter.fromAsset('model.tflite');
-      var input = cameraImage!.planes.map((plane) {
-        return plane.bytes;
-      }).toList();
-      var output = List.filled(1 * 2, 0).reshape([1, 2]); // Assuming output shape is [1, 2]
-
-      interpreter.run(input, output);
-
-      setState(() {
-        this.output = output.toString(); // Update output based on your model's output
+      var predictions = await Tflite.runModelOnFrame(
+          bytesList: cameraImage!.planes.map((plane) {
+            return plane.bytes;
+          }).toList(),
+          imageHeight: cameraImage!.height,
+          imageWidth: cameraImage!.width,
+          imageMean: 127.5,
+          imageStd: 127.5,
+          rotation: 90,
+          numResults: 2,
+          threshold: 0.1,
+          asynch: true);
+      predictions!.forEach((element) {
+        setState(() {
+          output = element['label'];
+        });
       });
     }
   }
 
-  loadModel() async {
-    // No need to load the model here as it's loaded in runModel()
+  loadmodel() async {
+    await Tflite.loadModel(
+        model: "assets/model_unquant.tflite", labels: "assets/labels.txt");
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Live Emotion Detection App')),
+      appBar: AppBar(title: Text('Food calorie detection')),
       body: Column(children: [
         Padding(
           padding: EdgeInsets.all(20),
