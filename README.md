@@ -1,16 +1,6 @@
 # food_calorie_recognition_app
+It is a Flutter application with integration of Machine Learning Models and Data Science.
+It helps user to scan food items and gives them the name and calorie of the food item scanned.
+With the help of a trained Machine Learning model the app enables the user to capture the food item and get the calories it contains.
 
-A new Flutter project.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
