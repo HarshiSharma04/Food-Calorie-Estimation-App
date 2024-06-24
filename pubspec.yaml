@@ -38,6 +38,8 @@ dependencies:
   permission_handler: ^11.3.1
   flutter_pie_chart: ^0.0.1
   tflite_v2: ^1.0.0
+  flutter_charts: ^0.5.2
+
 
 
 

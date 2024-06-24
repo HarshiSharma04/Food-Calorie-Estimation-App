@@ -1,240 +1,303 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
-class TrackProgressPage extends StatelessWidget {
+class TrackProgressPage extends StatefulWidget {
+  @override
+  _TrackProgressPageState createState() => _TrackProgressPageState();
+}
+
+class _TrackProgressPageState extends State<TrackProgressPage> {
+  List<String> tasks = [];
+  List<bool> taskStatus = [];
+  double waterIntake = 1.5; // example data: 1.5 liters out of 2 liters goal
+
+  void _addTask(String task) {
+    setState(() {
+      tasks.add(task);
+      taskStatus.add(false);
+    });
+  }
+
+  void _deleteTask(int index) {
+    setState(() {
+      tasks.removeAt(index);
+      taskStatus.removeAt(index);
+    });
+  }
+
+  void _toggleTaskStatus(int index) {
+    setState(() {
+      taskStatus[index] = !taskStatus[index];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Track Progress', style: TextStyle(color: Colors.black),),
-        backgroundColor: Color(0xFFF35E64),
-        iconTheme: IconThemeData(color: Color(0xFF755A5F)), // Ensuring the icons are visible
-        titleTextStyle: TextStyle(color: Color(0xFF755A5F), fontSize: 20, fontWeight: FontWeight.bold),
+        title: Text('Track Progress'),
+        backgroundColor: Color(0xFFF35E64), // Use your app's primary color
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFFF3E9F8), Color(0xFFEDE7DB)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
+      body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Your Progress',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF404040),
-              ),
-            ),
-            SizedBox(height: 20),
-            Expanded(
-              child: Card(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                elevation: 5,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      Text(
-                        'Calorie Intake Over Time',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF755A5F),
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: LineChart(
-                            LineChartData(
-                              gridData: FlGridData(show: true),
-                              titlesData: FlTitlesData(
-                                bottomTitles: AxisTitles(
-                                  sideTitles: SideTitles(
-                                    showTitles: true,
-                                    reservedSize: 22,
-                                    getTitlesWidget: bottomTitleWidgets,
-                                  ),
-                                ),
-                                leftTitles: AxisTitles(
-                                  sideTitles: SideTitles(
-                                    showTitles: true,
-                                    reservedSize: 28,
-                                    getTitlesWidget: leftTitleWidgets,
-                                  ),
-                                ),
-                              ),
-                              borderData: FlBorderData(show: true),
-                              minX: 0,
-                              maxX: 4,
-                              minY: 0,
-                              maxY: 2500,
-                              lineBarsData: [
-                                LineChartBarData(
-                                  spots: [
-                                    FlSpot(0, 1500),
-                                    FlSpot(1, 1800),
-                                    FlSpot(2, 2000),
-                                    FlSpot(3, 2200),
-                                    FlSpot(4, 1900),
-                                  ],
-                                  isCurved: true,
-                                  barWidth: 5,
-                                  color: Color(0xFF9D75DD),
-                                  belowBarData: BarAreaData(
-                                    show: true,
-                                    gradient: LinearGradient(
-                                      colors: [Color(0xFF9D75DD).withOpacity(0.3), Color(0xFF82ACBA).withOpacity(0.3)],
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Calorie Intake Chart
+              Text(
+                'Calorie Intake Chart',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF82ACBA), // Your custom color
                 ),
               ),
-            ),
-            SizedBox(height: 20),
-            Expanded(
-              child: Card(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                elevation: 5,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(
-                        'Daily Intake Summary',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF755A5F),
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      Table(
-                        border: TableBorder.all(color: Colors.grey),
-                        children: [
-                          _buildTableRow('Nutrient', 'Amount', isHeader: true),
-                          _buildTableRow('Calories', '2000 kcal'),
-                          _buildTableRow('Protein', '75 g'),
-                          _buildTableRow('Carbs', '250 g'),
-                          _buildTableRow('Fats', '80 g'),
+              SizedBox(height: 16),
+              Container(
+                height: 200,
+                child: BarChart(
+                  BarChartData(
+                    alignment: BarChartAlignment.spaceAround,
+                    barGroups: [
+                      BarChartGroupData(
+                        x: 0,
+                        barRods: [
+                          BarChartRodData(toY: 1800, color: Colors.green)
                         ],
+                        showingTooltipIndicators: [0],
+                      ),
+                      BarChartGroupData(
+                        x: 1,
+                        barRods: [
+                          BarChartRodData(toY: 200, color: Colors.red),
+                        ],
+                        showingTooltipIndicators: [0],
                       ),
                     ],
+                    titlesData: FlTitlesData(
+                      leftTitles: AxisTitles(
+                        sideTitles: SideTitles(showTitles: true),
+                      ),
+                      bottomTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          getTitlesWidget: (double value, TitleMeta meta) {
+                            switch (value.toInt()) {
+                              case 0:
+                                return Text('Completed');
+                              case 1:
+                                return Text('Left');
+                              default:
+                                return Text('');
+                            }
+                          },
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+              SizedBox(height: 24),
+
+              // Water Intake Section
+              Text(
+                'Water Intake',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF82ACBA), // Your custom color
+                ),
+              ),
+              SizedBox(height: 16),
+              Container(
+                height: 200,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    CustomPaint(
+                      painter: WaterBottlePainter(waterIntake),
+                      size: Size(100, 200),
+                    ),
+                    Positioned(
+                      top: 16,
+                      child: Text(
+                        '${waterIntake.toStringAsFixed(1)}L / 2L',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blueAccent,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 24),
+
+              // Motivational Quotes Section
+              Text(
+                'Motivational Quotes',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF82ACBA), // Your custom color
+                ),
+              ),
+              SizedBox(height: 16),
+              Container(
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Color(0xFFE8F1F2),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      '"Drink water, stay healthy!"',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontStyle: FontStyle.italic,
+                        color: Color(0xFF5A9EAD),
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      '"Hydration is key to a better day!"',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontStyle: FontStyle.italic,
+                        color: Color(0xFF5A9EAD),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 24),
+
+              // Tasks Section
+              Text(
+                'Tasks',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF82ACBA), // Your custom color
+                ),
+              ),
+              SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: 'Add a task',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      onSubmitted: (value) {
+                        if (value.isNotEmpty) {
+                          _addTask(value);
+                        }
+                      },
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Add task using the TextField value
+                    },
+                    child: Icon(Icons.add),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFFF35E64),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 16),
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: tasks.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: Checkbox(
+                      value: taskStatus[index],
+                      onChanged: (bool? value) {
+                        _toggleTaskStatus(index);
+                      },
+                    ),
+                    title: Text(
+                      tasks[index],
+                      style: TextStyle(
+                        decoration: taskStatus[index]
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none,
+                      ),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () {
+                        _deleteTask(index);
+                      },
+                    ),
+                  );
+                },
+              ),
+              SizedBox(height: 24),
+            ],
+          ),
         ),
       ),
     );
   }
+}
 
-  TableRow _buildTableRow(String nutrient, String amount, {bool isHeader = false}) {
-    return TableRow(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            nutrient,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: isHeader ? FontWeight.bold : FontWeight.normal,
-              color: isHeader ? Color(0xFF755A5F) : Colors.black,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            amount,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: isHeader ? FontWeight.bold : FontWeight.normal,
-              color: isHeader ? Color(0xFF755A5F) : Colors.black,
-            ),
-          ),
-        ),
-      ],
+class WaterBottlePainter extends CustomPainter {
+  final double waterIntake;
+
+  WaterBottlePainter(this.waterIntake);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint paint = Paint()
+      ..color = Colors.blue.withOpacity(0.5)
+      ..style = PaintingStyle.fill;
+
+    Path bottlePath = Path();
+    bottlePath.moveTo(size.width * 0.3, size.height * 0.05);
+    bottlePath.lineTo(size.width * 0.7, size.height * 0.05);
+    bottlePath.lineTo(size.width * 0.7, size.height * 0.2);
+    bottlePath.lineTo(size.width * 0.8, size.height * 0.3);
+    bottlePath.lineTo(size.width * 0.8, size.height * 0.8);
+    bottlePath.quadraticBezierTo(
+      size.width * 0.8,
+      size.height * 0.9,
+      size.width * 0.7,
+      size.height * 0.9,
+    );
+    bottlePath.lineTo(size.width * 0.3, size.height * 0.9);
+    bottlePath.quadraticBezierTo(
+      size.width * 0.2,
+      size.height * 0.9,
+      size.width * 0.2,
+      size.height * 0.8,
+    );
+    bottlePath.lineTo(size.width * 0.2, size.height * 0.3);
+    bottlePath.lineTo(size.width * 0.3, size.height * 0.2);
+    bottlePath.lineTo(size.width * 0.3, size.height * 0.05);
+    bottlePath.close();
+
+    canvas.drawPath(bottlePath, Paint()..color = Colors.grey.withOpacity(0.3));
+
+    double filledHeight = size.height * 0.8 * (waterIntake / 2.0);
+    canvas.drawRect(
+      Rect.fromLTWH(size.width * 0.2, size.height * 0.9 - filledHeight, size.width * 0.6, filledHeight),
+      paint,
     );
   }
 
-  Widget bottomTitleWidgets(double value, TitleMeta meta) {
-    const style = TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 14,
-      color: Color(0xFF755A5F),
-    );
-    Widget text;
-    switch (value.toInt()) {
-      case 0:
-        text = Text('June 1', style: style);
-        break;
-      case 1:
-        text = Text('June 2', style: style);
-        break;
-      case 2:
-        text = Text('June 3', style: style);
-        break;
-      case 3:
-        text = Text('June 4', style: style);
-        break;
-      case 4:
-        text = Text('June 5', style: style);
-        break;
-      default:
-        text = Text('', style: style);
-        break;
-    }
-    return SideTitleWidget(axisSide: meta.axisSide, child: text);
-  }
-
-  Widget leftTitleWidgets(double value, TitleMeta meta) {
-    const style = TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 14,
-      color: Color(0xFF755A5F),
-    );
-    Widget text;
-    switch (value.toInt()) {
-      case 0:
-        text = Text('0', style: style);
-        break;
-      case 500:
-        text = Text('500', style: style);
-        break;
-      case 1000:
-        text = Text('1000', style: style);
-        break;
-      case 1500:
-        text = Text('1500', style: style);
-        break;
-      case 2000:
-        text = Text('2000', style: style);
-        break;
-      case 2500:
-        text = Text('2500', style: style);
-        break;
-      default:
-        return Container();
-    }
-    return SideTitleWidget(axisSide: meta.axisSide, child: text);
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return false;
   }
 }
