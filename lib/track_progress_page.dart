@@ -110,68 +110,65 @@ class _TrackProgressPageState extends State<TrackProgressPage> {
                 ),
               ),
               SizedBox(height: 16),
-              Container(
-                height: 200,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    CustomPaint(
-                      painter: WaterBottlePainter(waterIntake),
-                      size: Size(100, 200),
-                    ),
-                    Positioned(
-                      top: 16,
-                      child: Text(
-                        '${waterIntake.toStringAsFixed(1)}L / 2L',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blueAccent,
+              Row(
+                children: [
+                  Container(
+                    height: 200,
+                    width: 100, // Adjust the width to fit the design
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        CustomPaint(
+                          painter: WaterBottlePainter(waterIntake),
+                          size: Size(100, 200),
                         ),
+                        Positioned(
+                          top: 16,
+                          child: Text(
+                            '${waterIntake.toStringAsFixed(1)}L / 2L',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blueAccent,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFE8F1F2),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '"Drink water, stay healthy!"',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontStyle: FontStyle.italic,
+                              color: Color(0xFF5A9EAD),
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            '"Hydration is key to a better day!"',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontStyle: FontStyle.italic,
+                              color: Color(0xFF5A9EAD),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 24),
-
-              // Motivational Quotes Section
-              Text(
-                'Motivational Quotes',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF82ACBA), // Your custom color
-                ),
-              ),
-              SizedBox(height: 16),
-              Container(
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Color(0xFFE8F1F2),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Column(
-                  children: [
-                    Text(
-                      '"Drink water, stay healthy!"',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontStyle: FontStyle.italic,
-                        color: Color(0xFF5A9EAD),
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    Text(
-                      '"Hydration is key to a better day!"',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontStyle: FontStyle.italic,
-                        color: Color(0xFF5A9EAD),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               SizedBox(height: 24),
 
