@@ -14,12 +14,52 @@ class _HomeState extends State<Home> {
   CameraImage? cameraImage;
   CameraController? cameraController;
   String output = '';
+  Map<String, String> foodCalories = {
+    '0 aloo gobi': '120 kcal',
+    '1 adhirasam': '320 kcal',
+    '2 aloo tikki': '160 kcal',
+    '3 biryani': '350 kcal',
+    '4 butter chicken': '460 kcal',
+    '5 bhindi masala': '110 kcal',
+    '6 bhatura': '180 kcal',
+    '7 basundi': '120 kcal',
+    '8 chana masala': '150 kcal',
+    '9 chapati': '70 kcal',
+    '10 chicken tikka': '260 kcal',
+    '11 cham cham': '180 kcal',
+    '12 daal makhni': '320 kcal',
+    '13 gajar ka halwa': '220 kcal',
+    '14 ghevar': '200 kcal',
+    '15 gulab jamun': '150 kcal',
+    '16 jalebi': '230 kcal',
+    '17 kachori': '210 kcal',
+    '18 kadhai paneer': '260 kcal',
+    '19 kadhi pakoda': '180 kcal',
+    '20 kuzi paniyaram': '170 kcal',
+    '21 lassi': '120 kcal',
+    '22 litti choka': '220 kcal',
+    '23 missi roti': '130 kcal',
+    '24 malpua': '250 kcal',
+    '25 kalakand': '180 kcal',
+    '26 naan': '200 kcal',
+    '27 palak paneer': '230 kcal',
+    '28 poha': '180 kcal',
+    '29 paneer butter masala': '350 kcal',
+    '30 rabri': '210 kcal',
+    '31 ras malai': '180 kcal',
+    '32 rasgulla': '150 kcal',
+    '33 sandesh': '160 kcal',
+    '34 unni apam': '190 kcal',
+    '35 sheer korma': '200 kcal',
+    '36 soan papdi': '120 kcal',
+  };
+
 
   @override
   void initState() {
     super.initState();
     loadCamera();
-    loadmodel();
+    loadModel();
   }
 
   loadCamera() {
@@ -54,13 +94,15 @@ class _HomeState extends State<Home> {
           asynch: true);
       predictions!.forEach((element) {
         setState(() {
-          output = element['label'];
+          String foodItem = element['label'];
+          String calories = foodCalories[foodItem] ?? 'Calorie info not available';
+          output = '$foodItem: $calories';
         });
       });
     }
   }
 
-  loadmodel() async {
+  loadModel() async {
     await Tflite.loadModel(
         model: "assets/model_unquant.tflite", labels: "assets/labels.txt");
   }
@@ -68,7 +110,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Food calorie detection')),
+      appBar: AppBar(title: Text('Food Calorie Detection')),
       body: Column(children: [
         Padding(
           padding: EdgeInsets.all(20),
@@ -86,7 +128,7 @@ class _HomeState extends State<Home> {
         Text(
           output,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        )
+        ),
       ]),
     );
   }

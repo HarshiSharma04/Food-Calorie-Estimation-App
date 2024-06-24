@@ -1,83 +1,169 @@
 import 'package:flutter/material.dart';
 
-class NutritionalDashboardPage extends StatelessWidget {
+class NutritionalDashboardPage extends StatefulWidget {
+  @override
+  _NutritionalDashboardPageState createState() => _NutritionalDashboardPageState();
+}
+
+class _NutritionalDashboardPageState extends State<NutritionalDashboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFF35E64),
         title: Text('Nutritional Dashboard'),
+        backgroundColor: Color(0xFFF35E64), // Use your app's primary color
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Nutrient Summary
               Text(
-                'Nutritional Summary',
+                'Nutrient Summary',
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF404040),
+                  color: Color(0xFF82ACBA), // Your custom color
                 ),
               ),
-              SizedBox(height: 20),
-              NutrientCard(
-                nutrient: 'Calories',
-                amount: '2,500 kcal',
-                color: Color(0xFF82ACBA),
-              ),
-              NutrientCard(
-                nutrient: 'Protein',
-                amount: '150 g',
-                color: Color(0xFFB3AC78),
-              ),
-              NutrientCard(
-                nutrient: 'Carbohydrates',
-                amount: '300 g',
-                color: Color(0xFFB3AC78),
-              ),
-              NutrientCard(
-                nutrient: 'Fats',
-                amount: '70 g',
-                color: Color(0xFF82ACBA),
-              ),
-              SizedBox(height: 20),
-              Text(
-                'Nutritional Breakdown',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF404040),
+              SizedBox(height: 16),
+              Container(
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _buildNutrientItem(Icons.local_fire_department, 'Protein', '50g'),
+                    _buildNutrientItem(Icons.grain, 'Carbs', '200g'),
+                    _buildNutrientItem(Icons.local_pizza, 'Fats', '70g'),
+                    _buildNutrientItem(Icons.food_bank_outlined, 'Vitamins', '50mg'),
+                  ],
                 ),
               ),
-              SizedBox(height: 10),
-              PieChartWidget(),
-              SizedBox(height: 20),
+              SizedBox(height: 24),
+
+              // Vitamin and Mineral Intake
               Text(
-                'Recent Meals',
+                'Vitamin and Mineral Intake',
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF404040),
+                  color: Color(0xFF82ACBA), // Your custom color
                 ),
               ),
-              SizedBox(height: 10),
-              MealCard(
-                meal: 'Breakfast',
-                description: 'Oatmeal, Banana, Coffee',
-                calories: '350 kcal',
+              SizedBox(height: 16),
+              Container(
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: GridView.count(
+                  shrinkWrap: true,
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                  children: [
+                    _buildVitaminMineralItem(Icons.sunny, 'Vitamin D', '15mcg'),
+                    _buildVitaminMineralItem(Icons.local_florist, 'Vitamin C', '90mg'),
+                    _buildVitaminMineralItem(Icons.wb_twilight, 'Iron', '18mg'),
+                    _buildVitaminMineralItem(Icons.album, 'Calcium', '1000mg'),
+                    _buildVitaminMineralItem(Icons.bolt, 'Magnesium', '400mg'),
+                    _buildVitaminMineralItem(Icons.local_cafe, 'Zinc', '11mg'),
+                  ],
+                ),
               ),
-              MealCard(
-                meal: 'Lunch',
-                description: 'Grilled Chicken Salad, Orange Juice',
-                calories: '450 kcal',
+              SizedBox(height: 24),
+
+              // Daily Meal Summary
+              Text(
+                'Daily Meal Summary',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF82ACBA), // Your custom color
+                ),
               ),
-              MealCard(
-                meal: 'Dinner',
-                description: 'Spaghetti, Garlic Bread, Salad',
-                calories: '600 kcal',
+              SizedBox(height: 16),
+              Container(
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    _buildMealSummaryItem(Icons.breakfast_dining, 'Breakfast', 'Oatmeal with fruits'),
+                    _buildMealSummaryItem(Icons.lunch_dining, 'Lunch', 'Grilled chicken salad'),
+                    _buildMealSummaryItem(Icons.dinner_dining, 'Dinner', 'Salmon with vegetables'),
+                    _buildMealSummaryItem(Icons.fastfood, 'Snacks', 'Nuts and yogurt'),
+                  ],
+                ),
+              ),
+              SizedBox(height: 24),
+
+              // Recommended Nutrients
+              Text(
+                'Recommended Nutrients',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF82ACBA), // Your custom color
+                ),
+              ),
+              SizedBox(height: 16),
+              Container(
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    _buildRecommendationItem('Protein', '50-60g'),
+                    _buildRecommendationItem('Carbs', '200-250g'),
+                    _buildRecommendationItem('Fats', '70-80g'),
+                    _buildRecommendationItem('Vitamins', 'Varies'),
+                    _buildRecommendationItem('Minerals', 'Varies'),
+                  ],
+                ),
               ),
             ],
           ),
@@ -85,125 +171,106 @@ class NutritionalDashboardPage extends StatelessWidget {
       ),
     );
   }
-}
 
-class NutrientCard extends StatelessWidget {
-  final String nutrient;
-  final String amount;
-  final Color color;
-
-  const NutrientCard({
-    Key? key,
-    required this.nutrient,
-    required this.amount,
-    required this.color,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      color: color,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              nutrient,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-            Text(
-              amount,
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class PieChartWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // Placeholder for a pie chart
-    return Container(
-      height: 200,
-      color: Color(0xFFF3F3F3),
-      child: Center(
-        child: Text(
-          'Pie Chart Here',
+  Widget _buildNutrientItem(IconData icon, String nutrient, String value) {
+    return Column(
+      children: [
+        Icon(icon, size: 30, color: Color(0xFF755A5F)), // Custom icon color
+        SizedBox(height: 8),
+        Text(
+          nutrient,
           style: TextStyle(
-            fontSize: 18,
-            color: Color(0xFF404040),
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
           ),
         ),
-      ),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.grey,
+          ),
+        ),
+      ],
     );
   }
-}
 
-class MealCard extends StatelessWidget {
-  final String meal;
-  final String description;
-  final String calories;
+  Widget _buildVitaminMineralItem(IconData icon, String nutrient, String value) {
+    return Column(
+      children: [
+        Icon(icon, size: 30, color: Color(0xFF755A5F)), // Custom icon color
+        SizedBox(height: 8),
+        Text(
+          nutrient,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.grey,
+          ),
+        ),
+      ],
+    );
+  }
 
-  const MealCard({
-    Key? key,
-    required this.meal,
-    required this.description,
-    required this.calories,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
+  Widget _buildMealSummaryItem(IconData icon, String meal, String description) {
+    return Row(
+      children: [
+        Icon(icon, size: 30, color: Color(0xFF755A5F)), // Custom icon color
+        SizedBox(width: 16),
+        Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               meal,
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF404040),
               ),
             ),
-            SizedBox(height: 5),
             Text(
               description,
               style: TextStyle(
-                fontSize: 16,
-                color: Color(0xFF404040),
-              ),
-            ),
-            SizedBox(height: 5),
-            Text(
-              calories,
-              style: TextStyle(
-                fontSize: 16,
-                color: Color(0xFF404040),
+                fontSize: 14,
+                color: Colors.grey,
               ),
             ),
           ],
         ),
-      ),
+      ],
+    );
+  }
+
+  Widget _buildRecommendationItem(String nutrient, String recommendation) {
+    return Row(
+      children: [
+        Icon(Icons.check, size: 30, color: Color(0xFF755A5F)), // Custom icon color
+        SizedBox(width: 16),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              nutrient,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              recommendation,
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey,
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
